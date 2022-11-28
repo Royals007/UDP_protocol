@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 public class UDPServer {
     private DatagramSocket socket;
     private boolean running;
-    private byte[] buf = new byte[512];
+    //private byte[] buf = new byte[512];
 
     private List<String> names = new ArrayList<>();
 
@@ -31,6 +31,7 @@ public class UDPServer {
         running = true;
         while (running) {
             try {
+                byte[] buf = new byte[512];
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
 
@@ -75,7 +76,7 @@ public class UDPServer {
     public String findFirstname(String lastname) {
 
         for (String name : names) {
-            if (name.contains(lastname)) {
+            if (name.endsWith(lastname)) {
                 System.out.println("find:" + name);
                 return name.split(" ")[0];
             }
@@ -104,5 +105,6 @@ public class UDPServer {
         UDPServer server = new UDPServer();
         server.createAndListenSocket();
         //System.out.println(server.findMissingNumber("1,4,5,9,2,6,7,8"));
+        //System.out.println(server.findFirstname(""));
     }
 }
