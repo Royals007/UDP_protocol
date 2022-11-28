@@ -53,20 +53,51 @@ public class UDPClient {
      */
     public static void main(String[] args) {
 
+        UDPClient client = new UDPClient();
+
+        // Task 1
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number of Full Names :"); // user define
+        int n = sc.nextInt();
+        sc.nextLine();
+        String[] names = new String[n];
+        System.out.println("Enter Full Names :");  //
+
+        for (int i = 0; i < names.length; ++i) {
+            names[i] = sc.nextLine();
+
+            String ss = client.sendEcho("SetName:" + names[i]);
+            System.out.println(ss);
+        }
+
+        System.out.println("LastName:");
+        String lastname = sc.nextLine();
+        String response = client.sendEcho("GetName: " + lastname);
+        System.out.println("Response from Server: " + response);
+
+
+        // Task 2
+        // find missing number from the given sequence
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Client sends -Missing: ");
+        String missing1 = scanner.next();
+        String numSeqMissing = client.sendEcho("Missing: " + missing1);//-> 3
+        System.out.println("server sends: " + numSeqMissing);
+
 
         // ############## Test ###################################
-        UDPClient client = new UDPClient();
+        //UDPClient client = new UDPClient();
         // 1. Task
         System.out.println("Test");
         client.sendEcho("SetName: John Doe");
         client.sendEcho("SetName: Max Meier");
         client.sendEcho("SetName: Ina Schultz");
 
-        String response = client.sendEcho("GetName: Doe");
-        System.out.println("Response from Server: " + response); //-> John
+        String responsse = client.sendEcho("GetName: Doe");
+        System.out.println("Response from Server: " + responsse); //-> John
 
         // 2. Task (Missing  Seq Number)
-        String missing = client.sendEcho("Missing: 1,4,5,9,2,6,7,8");//-> 3
+        String missing = client.sendEcho("Missing: 4,9,2,3,8,1,5,7");//-> 3
         System.out.println(missing);
     }
 }
